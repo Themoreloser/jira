@@ -1,30 +1,31 @@
-import { SearchPanel } from './search-list'
-import { List } from './list'
-import { useState,useEffect } from 'react'
-const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3001'
-export  const ProjectListScreen = () => {
-    const [users,setUsers] = useState([])
-    const [param, setParam] = useState({
-        name: '',
-        personId: ''
+import { SearchPanel } from "./search-list"
+import { List } from "./list"
+import { useState,useEffect } from "react"
+import React from "react"
+const apiUrl = process.env.REACT_APP_API_URL
+export const ProjectListScreen = () =>{
+    const [list,setList] = useState([])
+    const [param,setParam] = useState({
+        name:'',
+        personId:''
     })
-    const [listData, setListData] = useState([])
-    useEffect(() => {
-        fetch(`${apiUrl}/projects`).then(async response => {
-            if (response.ok) {
-                setListData(await response.json())
+    const [users,setUsers] = useState([])
+    useEffect(()=>{
+        fetch(`${apiUrl}/proejects`).then(async response=> {
+            if(response.ok){
+                setList(await response.json())
             }
-        }).catch(error => console.error('获取项目列表失败:', error))
-    },[])
-    useEffect(() => {
-        fetch(`${apiUrl}/users`).then(async response => {
-            if (response.ok) {
+        })
+    },[param])
+    useEffect(()=>{
+        fetch(`${apiUrl}/users`).then(async response=> {
+            if(response.ok){
                 setUsers(await response.json())
             }
-        }).catch(error => console.error('获取用户列表失败:', error))
+        })
     },[])
     return <div>
-        <SearchPanel users={users} param={param} setParam={setParam} />
-        <List projects={listData} users={users} />
+        <SearchPanel users={users} param={param} setParam={setParam}/>
+        <List users={users} list={list} />
     </div>
 }
