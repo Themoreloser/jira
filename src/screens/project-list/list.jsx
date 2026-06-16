@@ -10,12 +10,12 @@ export const List = ({ users, list }) => {
       </thead>
       <tbody>
         {list.map((project) => (
-          <tr>
+          <tr key={project.id}>
             <td>{project.name}</td>
             <td>
-              {users.find((user) => users.id === project.personId)?.name ||
+              {users.find((user) => String(user.id) === String(project.personId))?.name ||
                 "未知"}
-            </td>{" "}
+            </td>
           </tr>
         ))}
       </tbody>
