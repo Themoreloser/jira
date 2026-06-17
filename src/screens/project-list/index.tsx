@@ -1,17 +1,18 @@
 import { SearchPanel } from "./search-list"
 import { List } from "./list"
+import type { Project } from "./list"
+import type { User } from "./search-list"
 import { useState,useEffect } from "react"
-import React from "react"
 import { cleanObject, useMount,useDebounce } from "../../util"
 import qs from "qs"
 const apiUrl = process.env.REACT_APP_API_URL
 export default function ProjectListScreen() {
-    const [list,setList] = useState([])
+    const [list,setList] = useState<Project[]>([])
     const [param,setParam] = useState({
         name:'',
         personId:''
     })
-    const [users,setUsers] = useState([])
+    const [users,setUsers] = useState<User[]>([])
     const debouncedParam = useDebounce(param,500)
     useEffect(()=>{
         fetch(`${apiUrl}/projects?${qs.stringify(cleanObject(debouncedParam))}`).then(async response=> {

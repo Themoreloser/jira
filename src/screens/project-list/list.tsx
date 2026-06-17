@@ -1,5 +1,4 @@
-import React from "react";
-import { User } from "./search-list";
+import type { User } from "./search-list";
 export interface Project{
   id:string;
   name:string;
