@@ -88,6 +88,37 @@ export const handlers = [
     return HttpResponse.json(users.map(({ password, ...rest }) => rest))
   }),
 
+  // 验证当前用户（/me 接口）
+  http.get('*/me', ({ request }) => {
+    const authHeader = request.headers.get('Authorization')
+    const token = authHeader?.replace('Bearer ', '')
+
+    if (!token) {
+      return HttpResponse.json(
+        { message: '未登录' },
+        { status: 401 }
+      )
+    }
+
+    // 根据 token 找到对应用户（login 返回 '123'，register 返回 '456'）
+    const userEntry = token === '123'
+      ? users[0]
+      : token === '456'
+        ? users[users.length - 1]
+        : null
+
+    if (userEntry) {
+      return HttpResponse.json({
+        user: { id: userEntry.id, name: userEntry.name, token }
+      })
+    }
+
+    return HttpResponse.json(
+      { message: 'token 无效' },
+      { status: 401 }
+    )
+  }),
+
   // 获取项目列表（支持查询参数）
   http.get('*/projects', ({ request }) => {
     const url = new URL(request.url)

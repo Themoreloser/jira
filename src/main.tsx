@@ -19,7 +19,7 @@ async function bootstrap() {
    <AppProviders>
 <StrictMode>
       <App />
-    </StrictMode>,
+    </StrictMode>
    </AppProviders>
    
   )
