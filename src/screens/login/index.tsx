@@ -2,7 +2,7 @@ import React, { type FormEvent } from "react";
 
 export const LoginScreen = ()=>{
 const login = (param:{username:string,password:string})=>{
-    const apiUrl = process.env.REACT_APP_API_URL
+    const apiUrl = import.meta.env.VITE_API_URL
     fetch(`${apiUrl}/login`,{
         method:'POST',
         headers:{
