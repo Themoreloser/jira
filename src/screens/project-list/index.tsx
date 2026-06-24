@@ -5,6 +5,7 @@ import type { User } from "./search-list"
 import { useState,useEffect } from "react"
 import { cleanObject, useMount,useDebounce } from "../../util"
 import { useHttp } from "../../util/http"
+import styled from "@emotion/styled"
 export default function ProjectListScreen() {
     const [list,setList] = useState<Project[]>([])
     const [param,setParam] = useState({
@@ -21,8 +22,13 @@ export default function ProjectListScreen() {
     useMount(()=>{
         client('users').then(setUsers)
     })
-    return <div>
+    return <Container>
+        <h1>项目列表</h1>
         <SearchPanel users={users} param={param} setParam={setParam}/>
         <List users={users} list={list} />
-    </div>
+    </Container>
 }
+
+const Container = styled.div`
+padding: 3.2rem
+`
