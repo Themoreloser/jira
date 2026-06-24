@@ -2,6 +2,7 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import App from './App.tsx'
 import { initMocks } from './mocks'
+import 'antd/dist/antd.css'
 import { AppProviders } from './context/index.tsx'
 // 初始化 Mock 后渲染应用
 async function bootstrap() {
