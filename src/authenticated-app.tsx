@@ -19,6 +19,7 @@ import { Dropdown,Button } from "antd"
 
 export const AuthenticatedApp = ()=>{
     const {logout,user} = useAuth()
+    
 return <div>
     <Header between={true}>
         <HeaderLeft gap={true}>

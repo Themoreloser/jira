@@ -3,6 +3,8 @@ import React, { useState, type ReactNode } from 'react';
 import type { User } from '../screens/project-list/search-list';
 import { useMount } from '../util';
 import { http } from '../util/http';
+import { FullPageError, FullPageloading } from '../components/lib';
+import { useAsync } from '../util/use-async';
 interface AuthForm {
   username: string,
   password: string
@@ -28,16 +30,23 @@ AuthContext.displayName = 'AuthContext'
 
 export const AuthProvider = ({children}:{children:ReactNode}) => {
   const [user, setUser] = useState<User | null>(null)
-  const [loading, setLoading] = useState(true)
-
+  const {run, isLoading, isError} = useAsync<User | null>()
   const login = (form: AuthForm) => auth.login(form).then(setUser)
   const register = (form: AuthForm) => auth.register(form).then(setUser)
   const logout = () => auth.logout().then(() => setUser(null))
   useMount(()=>{
-    bootstrapUser().then(setUser).catch(()=>{}).finally(()=> setLoading(false))
+    run(bootstrapUser().then(user => {
+      setUser(user)
+      return user
+    }))
   })
 
-  if(loading) return <div>加载中...</div>
+  if(isLoading){
+     return <FullPageloading/>
+  }
+  if(isError){
+    return <FullPageError/>
+  }
   return <AuthContext.Provider children={children} value={{user,login,register,logout}}/>
 }
 export const useAuth = ()=>{

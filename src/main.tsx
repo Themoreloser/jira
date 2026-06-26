@@ -4,6 +4,7 @@ import App from './App.tsx'
 import { initMocks } from './mocks'
 import 'antd/dist/antd.css'
 import { AppProviders } from './context/index.tsx'
+import ErrorBoundary from 'antd/es/alert/ErrorBoundary'
 // 初始化 Mock 后渲染应用
 async function bootstrap() {
   // 开发环境下启用 Mock
@@ -17,11 +18,14 @@ async function bootstrap() {
   }
 
   createRoot(document.getElementById('root')!).render(
-   <AppProviders>
+    <ErrorBoundary>
+       <AppProviders>
 <StrictMode>
       <App />
     </StrictMode>
    </AppProviders>
+    </ErrorBoundary>
+  
    
   )
 }
