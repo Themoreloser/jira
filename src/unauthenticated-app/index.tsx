@@ -3,13 +3,14 @@ import { RegisterScreen } from "./register";
 import { LoginScreen } from "./login";
 import Card from "antd/es/card/Card";
 import styled from "@emotion/styled";
-import { Button, Divider } from "antd";
+import { Button, Divider, Typography } from "antd";
 import left from '../assets/left.svg'
 import right from '../assets/right.svg'
 import logo from '../assets/logo.svg'
 
 export const UnauthenticatedApp = ()=>{
     const [isRegister,setIsRegister] = useState(false)
+    const [error,setError] = useState<Error | null>(null)
     return  <Container>
         <Header>
             <img src={logo} alt="logo" />
@@ -19,8 +20,9 @@ export const UnauthenticatedApp = ()=>{
             <Title>
                 {isRegister ? '请注册' : '请登录'}
             </Title>
+            {error ? <Typography.Text type={"danger"}>{error.message}</Typography.Text> : null }
          {
-            isRegister ? <RegisterScreen/> : <LoginScreen/>
+            isRegister ? <RegisterScreen onError={setError}/> : <LoginScreen onError={setError} />
         }
         <Divider />
         <a onClick={()=>setIsRegister(!isRegister)}>{isRegister ? '已经有账号了？直接登录' : '没有账号？注册新账号' }</a>

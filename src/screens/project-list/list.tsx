@@ -10,11 +10,12 @@ export interface Project{
   created:number
 }
 interface ListProps{
-  list:Project[],
+  loading?:boolean,
+  dataSource:Project[],
   users:User[]
 }
-export const List = ({ users, list }:ListProps) => {
-  return <Table pagination={false} columns={[
+export const List = ({ loading, users, dataSource }:ListProps) => {
+  return <Table<Project> loading={loading} pagination={false} columns={[
     {
     title:'名称',
     dataIndex:'name',
@@ -26,7 +27,7 @@ export const List = ({ users, list }:ListProps) => {
   },
   {
     title:'负责人',
-    render(value,project){
+    render(_value,project){
       return <span>
          {users.find((user) => String(user.id) === String(project.personId))?.name ||
                 "未知"}
@@ -35,11 +36,11 @@ export const List = ({ users, list }:ListProps) => {
   },
   {
     title:'创建时间',
-    render(value,project){
+    render(_value,project){
       return <span>
         {project.created ? dayjs(project.created).format('YYYY-MM-DD'):'无'}
       </span>
     }
   }
-]} dataSource={list} />
+]} dataSource={dataSource} />
 }

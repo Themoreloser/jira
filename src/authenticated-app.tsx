@@ -3,8 +3,7 @@ import { useAuth } from "./context/auth-context"
 import ProjectListScreen from "./screens/project-list"
 import { Row } from "./components/lib"
 import SoftwareLogo from './assets/software-logo.svg?react'
-import Dropdown from "antd/es/dropdown/dropdown"
-import { Menu } from "antd"
+import { Dropdown,Button } from "antd"
 
 /**
  * grid 和 flex 各自的应用场景
@@ -28,11 +27,7 @@ return <div>
             <h2>用户</h2>
         </HeaderLeft>
         <HeaderRight>
-          <Dropdown overlay={<Menu>
-            <Menu.Item key={'logout'}>
-                <a onClick={logout}>登出</a>
-            </Menu.Item>
-          </Menu>}>
+          <Dropdown menu={{items:[{key:'logout',label:<Button type={"link"} onClick={logout}>登出</Button>}]}}>
             <a onClick={e => e.preventDefault()}>
                 Hi,{user?.name}
             </a>
