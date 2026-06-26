@@ -40,3 +40,17 @@ export const useArray = <T>(initailArray:T[])=>{
 
     }
 }
+
+export const useDocumentTitle = (title:string,keepUnmount:boolean = true)=>{
+    const oldtitle = document.title
+    useEffect(()=>{
+        document.title=title
+    },[title])
+    useEffect(()=>{
+        return ()=>{
+            if(!keepUnmount){
+                document.title = oldtitle
+            }
+        }
+    })
+}
