@@ -7,6 +7,7 @@ import { Dropdown,Button } from "antd"
 import { Navigate,Route,Routes } from "react-router"
 import {BrowserRouter as Router} from "react-router-dom"
 import { ProjectScreen } from "./screens/project"
+import { resetRoute } from "./util"
 /**
  * grid 和 flex 各自的应用场景
  * 1. 要考虑，是一维布局 还是 二维布局
@@ -39,7 +40,9 @@ const PageHeader = ()=>{
      const {logout,user} = useAuth()
     return <Header between={true}>
         <HeaderLeft gap={true}>
+            <Button type={'link'} onClick={resetRoute}>
             <SoftwareLogo width={'18rem'} color={'rgb(38,138,255)'}/>
+            </Button>
             <h2>项目</h2>
             <h2>用户</h2>
         </HeaderLeft>
