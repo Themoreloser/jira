@@ -4,7 +4,9 @@ import ProjectListScreen from "./screens/project-list"
 import { Row } from "./components/lib"
 import SoftwareLogo from './assets/software-logo.svg?react'
 import { Dropdown,Button } from "antd"
-
+import { Navigate,Route,Routes } from "react-router"
+import {BrowserRouter as Router} from "react-router-dom"
+import { ProjectScreen } from "./screens/project"
 /**
  * grid 和 flex 各自的应用场景
  * 1. 要考虑，是一维布局 还是 二维布局
@@ -18,10 +20,24 @@ import { Dropdown,Button } from "antd"
  */
 
 export const AuthenticatedApp = ()=>{
-    const {logout,user} = useAuth()
-    
+
 return <div>
-    <Header between={true}>
+    <PageHeader />
+    <Main>
+    <Router>
+    <Routes>
+        <Route path={'/'} element={<Navigate to={'/projects'}/>}></Route>
+        <Route path={'projects'} element={<ProjectListScreen/>}></Route>
+        <Route path={'projects/:projectId/*'} element={<ProjectScreen/>}></Route>
+    </Routes>
+    </Router>
+    </Main>
+    </div>
+}
+
+const PageHeader = ()=>{
+     const {logout,user} = useAuth()
+    return <Header between={true}>
         <HeaderLeft gap={true}>
             <SoftwareLogo width={'18rem'} color={'rgb(38,138,255)'}/>
             <h2>项目</h2>
@@ -35,11 +51,6 @@ return <div>
           </Dropdown>
         </HeaderRight>
     </Header>
-    <Main>
-    <ProjectListScreen />
-    </Main>
-        
-    </div>
 }
 
 // const PageHeader = styled.header`
