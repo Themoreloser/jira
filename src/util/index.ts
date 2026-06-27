@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 
 export const isFalsy = (value: unknown): boolean => value === 0 ? false : !value
 
@@ -42,7 +42,7 @@ export const useArray = <T>(initailArray:T[])=>{
 }
 
 export const useDocumentTitle = (title:string,keepUnmount:boolean = true)=>{
-    const oldtitle = document.title
+    const oldtitle = useRef(document.title).current
     useEffect(()=>{
         document.title=title
     },[title])
@@ -51,6 +51,6 @@ export const useDocumentTitle = (title:string,keepUnmount:boolean = true)=>{
             if(!keepUnmount){
                 document.title = oldtitle
             }
-        }
-    })
+        } 
+    },[keepUnmount,oldtitle])
 }
