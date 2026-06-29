@@ -9,11 +9,11 @@ let users = [
 ]
 
 const projects = [
-  { id: '1', name: '骑手管理', personId: '1', organization: '外卖组', created: 1604989757139 },
-  { id: '2', name: '团购 APP', personId: '2', organization: '团购组', created: 1604989757139 },
-  { id: '3', name: '物料管理系统', personId: '2', organization: '物料组', created: 1546300800000 },
-  { id: '4', name: '总部管理系统', personId: '3', organization: '总部', created: 1604980000011 },
-  { id: '5', name: '送餐路线规划系统', personId: '4', organization: '外卖组', created: 1546900800000 },
+  { id: '1', name: '骑手管理', personId: '1', pin: false, organization: '外卖组', created: 1604989757139 },
+  { id: '2', name: '团购 APP', personId: '2', pin: false, organization: '团购组', created: 1604989757139 },
+  { id: '3', name: '物料管理系统', personId: '2', pin: false, organization: '物料组', created: 1546300800000 },
+  { id: '4', name: '总部管理系统', personId: '3', pin: false, organization: '总部', created: 1604980000011 },
+  { id: '5', name: '送餐路线规划系统', personId: '4', pin: false, organization: '外卖组', created: 1546900800000 },
 ]
 
 // 定义请求处理器 - 使用通配符匹配所有域名
@@ -140,5 +140,24 @@ export const handlers = [
     }
 
     return HttpResponse.json(filteredProjects)
+  }),
+
+  // 更新项目（支持 pin 等字段）
+  http.patch('*/project/:id', async ({ params, request }) => {
+    const { id } = params
+    const body = await request.json() as Record<string, unknown>
+    console.log('[MSW] 更新项目:', id, body)
+
+    const projectIndex = projects.findIndex(p => p.id === id)
+    if (projectIndex === -1) {
+      return HttpResponse.json(
+        { message: '项目不存在' },
+        { status: 404 }
+      )
+    }
+
+    // 更新项目数据
+    projects[projectIndex] = { ...projects[projectIndex], ...body }
+    return HttpResponse.json(projects[projectIndex])
   }),
 ]

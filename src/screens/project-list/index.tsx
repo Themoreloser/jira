@@ -13,7 +13,7 @@ export default function ProjectListScreen() {
    useDocumentTitle('项目列表')
     // 基本类型可以放到依赖里；组件状态可以放到依赖里；非组件状态，绝不可以放到依赖里
     const [param,setParam] = useProjectsSearchParams()
-    const {isLoading,error,data:list} = useProjects(useDebounce(param,200))
+    const {isLoading,error,data:list,retry} = useProjects(useDebounce(param,200))
     const {data:users} = useUsers()
     
 
@@ -23,7 +23,7 @@ export default function ProjectListScreen() {
         <h1>项目列表</h1>
         <SearchPanel users={users ?? []} param={param} setParam={setParam}/>
         {error ? <Typography.Text type={"danger"}>{error.message}</Typography.Text> : null}
-        <List  loading={isLoading} users={users ?? []} dataSource={list ?? []}/>
+        <List refresh={retry} loading={isLoading} users={users ?? []} dataSource={list ?? []}/>
     </Container>
 }
 

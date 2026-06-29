@@ -8,9 +8,43 @@ import type { User } from "../screens/project-list/search-list"
 export const useProjects = (param?:Partial<Project>) =>{
     const client = useHttp()
     const {run,...result} = useAsync<Project[]>()
+
+    const fetchProjects = ()=>client('projects',{data:cleanObject(param || {})})
     useEffect(()=>{
-        run( client('projects',{data:cleanObject(param || {})}))
+        run( fetchProjects(),{
+            retry:fetchProjects
+        })
     },[param])
 
     return result
+}
+
+export const useEditProject = ()=>{
+    const {run,...asyncRsault} = useAsync()
+    const client = useHttp()
+    const mutate = (params: Partial<Project>) =>{
+        return run(client(`project/${params.id}`,{
+            data:params,
+            method:'PATCH'
+        }))
+    } 
+    return {
+        mutate,
+        ...asyncRsault
+    }
+}
+
+export const useAddProject = ()=>{
+    const {run,...asyncRsault} = useAsync()
+    const client = useHttp()
+    const mutate = (params: Partial<Project>) =>{
+        return run(client(`project/${params.id}`,{
+            data:params,
+            method:'POST'
+        }))
+    } 
+    return {
+        mutate,
+        ...asyncRsault
+    }
 }

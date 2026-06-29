@@ -23,6 +23,10 @@ export const useAsync =<D>(initialState?:State<D>, initialConfig?: typeof defaul
         ...defaultInitialState,
         ...initialState
     })
+    // useState直接传入函数的含义是：惰性初始化；所有要用useState保存函数，不能直接传入函数
+    const [retry,setRetry] = useState(()=>()=>{
+
+    })
 
     const setData = (data:D) =>setState({
         data,
@@ -36,10 +40,16 @@ export const useAsync =<D>(initialState?:State<D>, initialConfig?: typeof defaul
         data:null
     })
     // run来触发异步请求
-    const run = (promise:Promise<D>) =>{
+    const run = (promise:Promise<D>,runConfig?:{retry:()=>Promise<D>}) =>{
         if(!promise || !promise.then){
             throw new Error('请传入 Promise 类型数据')
         }
+        setRetry(()=>()=>{
+            if(runConfig?.retry){
+                   run(runConfig?.retry(),runConfig)
+            }
+         
+        })
         setState(prev =>({...prev, status:'loading'}))
         return promise.then(data=>{
             setData(data)
@@ -52,6 +62,8 @@ export const useAsync =<D>(initialState?:State<D>, initialConfig?: typeof defaul
         return error
         })
     }
+    
+
     return{
         isIdle:state.status === 'idle',
         isLoading: state.status === 'loading',
@@ -60,6 +72,8 @@ export const useAsync =<D>(initialState?:State<D>, initialConfig?: typeof defaul
         run,
         setData,
         setError,
+        // retry被调用重新跑一遍run，让state刷新一遍
+        retry,
         ...state
     }
 }
