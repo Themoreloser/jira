@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { useMountedRef } from ".";
 
 interface State<D>{
@@ -30,19 +30,19 @@ export const useAsync =<D>(initialState?:State<D>, initialConfig?: typeof defaul
 
     })
 
-    const setData = (data:D) =>setState({
+    const setData = useCallback((data:D) =>setState({
         data,
         status:'success',
         error:null
-    })
+    }),[])
 
-    const setError = (error:Error) => setState({
+    const setError = useCallback((error:Error) => setState({
         error,
         status:'error',
         data:null
-    })
+    }),[])
     // run来触发异步请求
-    const run = (promise:Promise<D>,runConfig?:{retry:()=>Promise<D>}) =>{
+    const run = useCallback((promise:Promise<D>,runConfig?:{retry:()=>Promise<D>}) =>{
         if(!promise || !promise.then){
             throw new Error('请传入 Promise 类型数据')
         }
@@ -64,7 +64,7 @@ export const useAsync =<D>(initialState?:State<D>, initialConfig?: typeof defaul
             return Promise.reject(error)
         return error
         })
-    }
+    },[config.throwOnError, mountedRef, setData,setError])
     
 
     return{
