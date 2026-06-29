@@ -1,5 +1,6 @@
 
 import { useState } from "react";
+import { useMountedRef } from ".";
 
 interface State<D>{
     error: Error | null;
@@ -23,6 +24,7 @@ export const useAsync =<D>(initialState?:State<D>, initialConfig?: typeof defaul
         ...defaultInitialState,
         ...initialState
     })
+    const mountedRef = useMountedRef()
     // useState直接传入函数的含义是：惰性初始化；所有要用useState保存函数，不能直接传入函数
     const [retry,setRetry] = useState(()=>()=>{
 
@@ -52,6 +54,7 @@ export const useAsync =<D>(initialState?:State<D>, initialConfig?: typeof defaul
         })
         setState(prev =>({...prev, status:'loading'}))
         return promise.then(data=>{
+            if(mountedRef.current)
             setData(data)
             return data
             // catch会消化异常，如果不主动抛出，外面是接受不到异常的
