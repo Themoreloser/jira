@@ -7,15 +7,17 @@ import { Typography } from "antd"
 import { useProjects } from "../../util/project"
 import { useUsers } from "../../util/user"
 import { Helmet } from "react-helmet"
+import { useUrlQueryParam } from "../../util/url"
 export default function ProjectListScreen() {
-    const [param,setParam] = useState({
-        name:'',
-        personId:''
-    })
+   
+    // 基本类型可以放到依赖里；组件状态可以放到依赖里；非组件状态，绝不可以放到依赖里
+    const [param,setParam] = useUrlQueryParam(['name','personId'])
     const debouncedParam = useDebounce(param,500)
     const {isLoading,error,data:list} = useProjects(debouncedParam)
     const {data:users} = useUsers()
     useDocumentTitle('项目列表')
+
+
     return <Container>
         
         <h1>项目列表</h1>
@@ -24,6 +26,8 @@ export default function ProjectListScreen() {
         <List  loading={isLoading} users={users ?? []} dataSource={list ?? []}/>
     </Container>
 }
+
+ProjectListScreen.whyDidYouRender = true
 
 const Container = styled.div`
 padding: 3.2rem;

@@ -5,6 +5,7 @@ import { initMocks } from './mocks'
 import 'antd/dist/antd.css'
 import { AppProviders } from './context/index.tsx'
 import ErrorBoundary from 'antd/es/alert/ErrorBoundary'
+// import './wdyr.ts'
 // 初始化 Mock 后渲染应用
 async function bootstrap() {
   // 开发环境下启用 Mock
