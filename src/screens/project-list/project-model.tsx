@@ -1,18 +1,11 @@
 import { Drawer, Button } from "antd"
-import { useSelector, useDispatch } from "react-redux"
-import { selectProjectModalOpen, selectEditingProjectId, projectListActions } from "./project-list-slice"
+import { useAuth } from "../../context/auth-context"
 
-export const ProjectModal = () => {
-    const dispatch = useDispatch()
-    const projectModalOpen = useSelector(selectProjectModalOpen)
-    const editingProjectId = useSelector(selectEditingProjectId)
+export const ProjectModel = () => {
+    const { projectModalOpen, editingProjectId, closeProjectModal } = useAuth()
 
-    const onClose = () => {
-        dispatch(projectListActions.closeProjectModal())
-    }
-
-    return <Drawer onClose={onClose} open={projectModalOpen} size={'100%'}>
+    return <Drawer onClose={closeProjectModal} open={projectModalOpen} size={'100%'}>
         <h1>{editingProjectId ? `编辑项目 ${editingProjectId}` : '创建项目'}</h1>
-        <Button onClick={onClose}>关闭</Button>
+        <Button onClick={closeProjectModal}>关闭</Button>
     </Drawer>
 }
