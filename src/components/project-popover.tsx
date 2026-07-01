@@ -1,10 +1,12 @@
-import { List,Popover ,Typography} from "antd";
+import { Button, Divider, List,Popover ,Typography} from "antd";
 import React from "react";
 import { useProjects } from "../util/project";
 import styled from "@emotion/styled";
+import { ButtonNoPadding } from "./lib";
+import type { JSX } from "@emotion/react/jsx-runtime";
 
 
-export const ProjectPopover = ()=>{
+export const ProjectPopover = (props:{projectButton:JSX.Element})=>{
     const {data:projects,retry} = useProjects()
     const pinnedProjects = projects?.filter(project => project.pin)
     const content = <ContainerContent>
@@ -16,6 +18,8 @@ export const ProjectPopover = ()=>{
                 </List.Item>)
             }
         </List>
+        <Divider />
+       {props.projectButton}
     </ContainerContent>
     return <Popover placement={"bottom"} content={content} onOpenChange={()=>retry()}>
        <span>项目</span>
