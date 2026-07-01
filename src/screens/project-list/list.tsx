@@ -1,3 +1,4 @@
+import React from "react";
 import { Dropdown, Menu, Table } from "antd";
 import type { User } from "./search-list";
 import dayjs from "dayjs";
@@ -85,14 +86,7 @@ export const List = ({ loading, users, dataSource, refresh,projectButton }: List
           items: [
             {
               key: "edit",
-              label: (
-                <ButtonNoPadding
-                  type={"link"}
-                  onClick={() => projectButton}
-                >
-                  编辑
-                </ButtonNoPadding>
-              ),
+              label: React.cloneElement(projectButton, {}, "编辑"),
             },
           ],
         }}

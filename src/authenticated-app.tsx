@@ -26,15 +26,15 @@ import { ProjectPopover } from "./components/project-popover"
 export const AuthenticatedApp = ()=>{
     const [projectModelOpen,setProjectModelOpen] = useState(false)
 return <div>
-    <PageHeader projectButton={ 
-        <ButtonNoPadding onClick={()=>props.setProjectModalOpen} 
+    <PageHeader projectButton={
+        <ButtonNoPadding onClick={()=>setProjectModelOpen(true)}
         type={'link'}>创建项目</ButtonNoPadding>} />
     <Main>
     <Router>
     <Routes>
         <Route path={'/'} element={<Navigate to={'/projects'}/>}></Route>
-        <Route path={'projects'} element={<ProjectListScreen projectButton={ 
-        <ButtonNoPadding onClick={()=>props.setProjectModalOpen} 
+        <Route path={'projects'} element={<ProjectListScreen projectButton={
+        <ButtonNoPadding onClick={()=>setProjectModelOpen(true)}
         type={'link'}>创建项目</ButtonNoPadding>}/>}></Route>
         <Route path={'projects/:projectId/*'} element={<ProjectScreen /> }></Route>
     </Routes>
