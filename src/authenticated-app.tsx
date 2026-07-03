@@ -24,34 +24,35 @@ import { ProjectPopover } from "./components/project-popover"
  */
 
 export const AuthenticatedApp = ()=>{
-    const [projectModelOpen,setProjectModelOpen] = useState(false)
+    
 return <div>
+     <Router>
     <PageHeader projectButton={
         <ButtonNoPadding onClick={()=>setProjectModelOpen(true)}
         type={'link'}>创建项目</ButtonNoPadding>} />
+       
     <Main>
-    <Router>
+    
     <Routes>
         <Route path={'/'} element={<Navigate to={'/projects'}/>}></Route>
-        <Route path={'projects'} element={<ProjectListScreen projectButton={
-        <ButtonNoPadding onClick={()=>setProjectModelOpen(true)}
-        type={'link'}>创建项目</ButtonNoPadding>}/>}></Route>
+        <Route path={'projects'} element={<ProjectListScreen />}></Route>
         <Route path={'projects/:projectId/*'} element={<ProjectScreen /> }></Route>
     </Routes>
-    </Router>
+   
     </Main>
-    <ProjectModel projectModelOpen={projectModelOpen} onClose={()=>setProjectModelOpen(false)}/>
+    <ProjectModel />
+     </Router>
     </div>
 }
 
-const PageHeader = (props:{projectButton:JSX.Element})=>{
+const PageHeader = ()=>{
      
     return <Header between={true}>
         <HeaderLeft gap={true}>
             <ButtonNoPadding style={{padding:0}} type={'link'} onClick={resetRoute}>
             <SoftwareLogo width={'18rem'} color={'rgb(38,138,255)'}/>
             </ButtonNoPadding>
-            <ProjectPopover {...props}/>
+            <ProjectPopover />
             <span>用户</span>
         </HeaderLeft>
         <HeaderRight>

@@ -21,9 +21,8 @@ interface ListProps {
   dataSource: Project[];
   users: User[];
   refresh?: () => void;
-  projectButton: JSX.Element
 }
-export const List = ({ loading, users, dataSource, refresh,projectButton }: ListProps) => {
+export const List = ({ loading, users, dataSource, refresh }: ListProps) => {
   const { mutate } = useEditProject();
   const pinProject = (id: number) => (pin: boolean) =>
     mutate({ id, pin }).then(refresh);
@@ -86,7 +85,7 @@ export const List = ({ loading, users, dataSource, refresh,projectButton }: List
           items: [
             {
               key: "edit",
-              label: React.cloneElement(projectButton, {}, "编辑"),
+              label: {},
             },
           ],
         }}

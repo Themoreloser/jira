@@ -4,9 +4,11 @@ import { useProjects } from "../util/project";
 import styled from "@emotion/styled";
 import { ButtonNoPadding } from "./lib";
 import type { JSX } from "@emotion/react/jsx-runtime";
+import { useProjectModal } from "../screens/project-list/util";
 
 
-export const ProjectPopover = (props:{projectButton:JSX.Element})=>{
+export const ProjectPopover = ()=>{
+    const {open} = useProjectModal()
     const {data:projects,retry} = useProjects()
     const pinnedProjects = projects?.filter(project => project.pin)
     const content = <ContainerContent>
@@ -19,7 +21,8 @@ export const ProjectPopover = (props:{projectButton:JSX.Element})=>{
             }
         </List>
         <Divider />
-       {props.projectButton}
+       <ButtonNoPadding onClick={open}
+        type={'link'}>创建项目</ButtonNoPadding>
     </ContainerContent>
     return <Popover placement={"bottom"} content={content} onOpenChange={()=>retry()}>
        <span>项目</span>
