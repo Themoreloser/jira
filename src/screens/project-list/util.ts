@@ -1,6 +1,7 @@
 import { useMemo } from "react"
 import { useUrlQueryParam } from "../../util/url"
 import { useProject } from "../../util/project"
+import { useParams } from "react-router"
 
 
 export const useProjectsSearchParams = ()=> {
@@ -9,6 +10,12 @@ export const useProjectsSearchParams = ()=> {
         useMemo(()=>({...param,personId:Number(param.personId) || undefined}),[param]),
         setParam
     ] as const
+}
+
+export const useProjectQueryKey = ()=>{
+    const [params] = useProjectsSearchParams()
+    return  ['projects',params]
+
 }
 
 export const useProjectModal = ()=>{

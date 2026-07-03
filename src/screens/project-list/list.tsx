@@ -1,13 +1,13 @@
 import React from "react";
-import { Dropdown, Menu, Table } from "antd";
+import { Dropdown, Menu, Modal, Table } from "antd";
 import type { User } from "./search-list";
 import dayjs from "dayjs";
 import { Link } from "react-router-dom";
 import { Pin } from "../../components/pin";
-import { useEditProject } from "../../util/project";
+import { useDeleteProject, useEditProject } from "../../util/project";
 import type { JSX } from "@emotion/react/jsx-runtime";
 import { ButtonNoPadding } from "../../components/lib";
-import { useProjectModal } from "./util";
+import { useProjectModal, useProjectQueryKey } from "./util";
 
 export interface Project {
   id: number;
@@ -24,12 +24,10 @@ interface ListProps {
   refresh?: () => void;
 }
 export const List = ({ loading, users, dataSource }: ListProps) => {
-  const { mutate } = useEditProject();
+  const { mutate } = useEditProject(useProjectQueryKey());
   const pinProject = (id: number) => (pin: boolean) =>
     mutate({ id, pin });
-   const editProject = (id: number) => () =>
-    startEdit(id)
-  const {startEdit} = useProjectModal()
+  
   return (
     <Table<Project>
       loading={loading}
@@ -84,7 +82,32 @@ export const List = ({ loading, users, dataSource }: ListProps) => {
        {
   render(_value, project) {
     return (
-      <Dropdown
+     <More project={project}/>
+    );
+  },
+}
+      ]}
+      dataSource={dataSource}
+    />
+  );
+};
+
+const More = ({project}:{peoject:Project})=>{
+ const editProject = (id: number) => () =>
+    startEdit(id)
+  const {startEdit} = useProjectModal()
+  const {mutate:deleteProject} = useDeleteProject(useProjectQueryKey())
+  const confirmDeleteProject = (id:number) =>{
+    Modal.confirm({
+      title:"确定删除这个项目吗",
+      content:"点击确定删除",
+      okText:"确定",
+      onOK(){
+        deleteProject({id})
+      }
+    })
+  }
+  return <Dropdown
         menu={{
           items: [
             {
@@ -94,18 +117,12 @@ export const List = ({ loading, users, dataSource }: ListProps) => {
             },
             {
               key:"delete",
-              label:'删除'
+              label:'删除',
+              onClick:confirmDeleteProject(project.id)
             }
           ],
         }}
       >
         <ButtonNoPadding type={"link"}>...</ButtonNoPadding>
       </Dropdown>
-    );
-  },
 }
-      ]}
-      dataSource={dataSource}
-    />
-  );
-};
