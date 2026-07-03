@@ -7,6 +7,7 @@ import { Pin } from "../../components/pin";
 import { useEditProject } from "../../util/project";
 import type { JSX } from "@emotion/react/jsx-runtime";
 import { ButtonNoPadding } from "../../components/lib";
+import { useProjectModal } from "./util";
 
 export interface Project {
   id: number;
@@ -22,10 +23,13 @@ interface ListProps {
   users: User[];
   refresh?: () => void;
 }
-export const List = ({ loading, users, dataSource, refresh }: ListProps) => {
+export const List = ({ loading, users, dataSource }: ListProps) => {
   const { mutate } = useEditProject();
   const pinProject = (id: number) => (pin: boolean) =>
-    mutate({ id, pin }).then(refresh);
+    mutate({ id, pin });
+   const editProject = (id: number) => () =>
+    startEdit(id)
+  const {startEdit} = useProjectModal()
   return (
     <Table<Project>
       loading={loading}
@@ -85,8 +89,13 @@ export const List = ({ loading, users, dataSource, refresh }: ListProps) => {
           items: [
             {
               key: "edit",
-              label: {},
+              label: '编辑',
+              onClick:editProject(project.id)
             },
+            {
+              key:"delete",
+              label:'删除'
+            }
           ],
         }}
       >

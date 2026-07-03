@@ -2,8 +2,7 @@ import { SearchPanel } from "./search-list"
 import { List } from "./list"
 import { useDebounce, useDocumentTitle } from "../../util"
 import styled from "@emotion/styled"
-import { Typography } from "antd"
-import { ButtonNoPadding, Row } from "../../components/lib"
+import { ButtonNoPadding, ErrorBox, Row } from "../../components/lib"
 import { useProjects } from "../../util/project"
 import { useUsers } from "../../util/user"
 import { useProjectModal, useProjectsSearchParams } from "./util"
@@ -12,7 +11,7 @@ export default function ProjectListScreen() {
    useDocumentTitle('项目列表')
     // 基本类型可以放到依赖里；组件状态可以放到依赖里；非组件状态，绝不可以放到依赖里
     const [param,setParam] = useProjectsSearchParams()
-    const {isLoading,error,data:list,retry} = useProjects(useDebounce(param,200))
+    const {isLoading,error,data:list} = useProjects(useDebounce(param,200))
     const {data:users} = useUsers()
     const {open} = useProjectModal()
 
@@ -24,8 +23,8 @@ export default function ProjectListScreen() {
         type={'link'}>创建项目</ButtonNoPadding>
         </Row>
         <SearchPanel users={users ?? []} param={param} setParam={setParam}/>
-        {error ? <Typography.Text type={"danger"}>{error.message}</Typography.Text> : null}
-        <List refresh={retry} loading={isLoading} users={users ?? []} dataSource={list ?? []}/>
+        <ErrorBox error={error}></ErrorBox>
+        <List  loading={isLoading} users={users ?? []} dataSource={list ?? []}/>
     </Container>
 }
 

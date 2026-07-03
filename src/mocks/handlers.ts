@@ -123,8 +123,26 @@ export const handlers = [
     )
   }),
 
+  // 创建项目
+  http.post('*/project', async ({ request }) => {
+    const body = await request.json() as Record<string, unknown>
+    console.log('[MSW] 创建项目:', body)
+
+    const newProject = {
+      id: String(projects.length + 1),
+      name: body.name as string || '',
+      personId: body.personId as string || '',
+      pin: false,
+      organization: body.organization as string || '',
+      created: Date.now(),
+    }
+    projects.push(newProject)
+
+    return HttpResponse.json(newProject)
+  }),
+
   // 获取项目列表（支持查询参数）
-  http.get('*/projects', ({ request }) => {
+  http.get('*/project', ({ request }) => {
     const url = new URL(request.url)
     const name = url.searchParams.get('name')
     const personId = url.searchParams.get('personId')
@@ -142,8 +160,21 @@ export const handlers = [
     return HttpResponse.json(filteredProjects)
   }),
 
+  // 获取单个项目
+  http.get('*/projects/:id', ({ params }) => {
+    const { id } = params
+    const project = projects.find(p => p.id === id)
+    if (!project) {
+      return HttpResponse.json(
+        { message: '项目不存在' },
+        { status: 404 }
+      )
+    }
+    return HttpResponse.json(project)
+  }),
+
   // 更新项目（支持 pin 等字段）
-  http.patch('*/project/:id', async ({ params, request }) => {
+  http.patch('*/projects/:id', async ({ params, request }) => {
     const { id } = params
     const body = await request.json() as Record<string, unknown>
     console.log('[MSW] 更新项目:', id, body)

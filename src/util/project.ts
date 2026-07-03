@@ -1,50 +1,41 @@
-import { useCallback, useEffect } from "react"
-import { cleanObject } from "."
 import type { Project } from "../screens/project-list/list"
-import { useAsync } from "./use-async"
 import { useHttp } from "./http"
-import type { User } from "../screens/project-list/search-list"
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 
 export const useProjects = (param?:Partial<Project>) =>{
     const client = useHttp()
-    const {run,...result} = useAsync<Project[]>()
 
-    const fetchProjects =useCallback( ()=>client('projects',{data:cleanObject(param || {})}),[client,param])
-    useEffect(()=>{
-        run( fetchProjects(),{
-            retry:fetchProjects
-        })
-    },[param,run,fetchProjects])
-
-    return result
+    return useQuery({queryKey:['projects',param],queryFn:()=>client('project',{data:param})})
 }
-
 export const useEditProject = ()=>{
-    const {run,...asyncRsault} = useAsync()
     const client = useHttp()
-    const mutate = (params: Partial<Project>) =>{
-        return run(client(`project/${params.id}`,{
-            data:params,
-            method:'PATCH'
-        }))
-    } 
-    return {
-        mutate,
-        ...asyncRsault
-    }
+    const queryClient = useQueryClient()
+    return useMutation({
+        mutationFn:(params:Partial<Project>)=>client(`projects`,{
+            method:'PATCH',
+            data:params
+        }),
+        onSuccess:()=>queryClient.invalidateQueries({queryKey:['projects']})
+    })
 }
 
-export const useAddProject = ()=>{
-    const {run,...asyncRsault} = useAsync()
+export const useAddProject = () => {
+    const queryClient = useQueryClient()
     const client = useHttp()
-    const mutate = (params: Partial<Project>) =>{
-        return run(client(`project/${params.id}`,{
-            data:params,
-            method:'POST'
-        }))
-    } 
-    return {
-        mutate,
-        ...asyncRsault
-    }
+    return useMutation({
+        mutationFn: (params: Partial<Project>) => client('project', {
+            data: params,
+            method: 'POST'
+        }),
+        onSuccess: () => queryClient.invalidateQueries({ queryKey: ['projects'] })
+    })
+}
+
+export const useProject = (id?:number) =>{
+    const client = useHttp()
+    return useQuery<Project>({
+        queryKey:['project',{id}],
+        queryFn:()=>client(`projects/${id}`),
+        enabled:Boolean(id)
+    })
 }

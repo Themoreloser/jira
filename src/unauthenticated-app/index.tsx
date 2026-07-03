@@ -9,6 +9,7 @@ import right from '../assets/right.svg'
 import logo from '../assets/logo.svg'
 import Helmet from 'react-helmet'
 import { useDocumentTitle } from "../util";
+import { ErrorBox } from "../components/lib";
 
 export const UnauthenticatedApp = ()=>{
     const [isRegister,setIsRegister] = useState(false)
@@ -23,7 +24,8 @@ export const UnauthenticatedApp = ()=>{
             <Title>
                 {isRegister ? '请注册' : '请登录'}
             </Title>
-            {error ? <Typography.Text type={"danger"}>{error.message}</Typography.Text> : null }
+            <ErrorBox error={error}></ErrorBox>
+           
          {
             isRegister ? <RegisterScreen onError={setError}/> : <LoginScreen onError={setError} />
         }
