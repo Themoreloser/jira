@@ -11,7 +11,7 @@ export const useEditProject = ()=>{
     const client = useHttp()
     const queryClient = useQueryClient()
     return useMutation({
-        mutationFn:(params:Partial<Project>)=>client(`projects`,{
+        mutationFn:(params:Partial<Project>)=>client(`projects/${params.id}`,{
             method:'PATCH',
             data:params
         }),

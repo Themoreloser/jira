@@ -29,6 +29,7 @@ export const useProjectModal = ()=>{
         close,
         startEdit,
         editingProject,
-        isLoading
+        isLoading,
+        editingProjectId
     }
 }

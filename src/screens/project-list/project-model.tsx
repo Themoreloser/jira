@@ -5,18 +5,17 @@ import  { Userselect } from "../../components/user-select"
 import { useAddProject, useEditProject } from "../../util/project"
 import { useForm } from "antd/es/form/Form"
 import  { ErrorBox } from "../../components/lib"
-import { styleText } from "util"
 import styled from "@emotion/styled"
 
 export const ProjectModel = ()=>{
-    const {close,projectModalOpen,editingProject,isLoading} = useProjectModal()
-    const title = editingProject ? '编辑项目' : '创建项目'
-    const useMutateProject = editingProject ? useEditProject : useAddProject
+    const {close,projectModalOpen,editingProject,isLoading,editingProjectId} = useProjectModal()
+    const title = editingProjectId ? '编辑项目' : '创建项目'
+    const useMutateProject = editingProjectId ? useEditProject : useAddProject
     const {mutateAsync,error,isLoading:mutateloading} = useMutateProject()
     
     const [form] = useForm()
     const onFinish = (values:any)=>{
-        mutateAsync({...editingProject,...values}).then(()=>{
+        mutateAsync({id:editingProjectId,...editingProject,...values}).then(()=>{
             form.resetFields()
             close()
         })
