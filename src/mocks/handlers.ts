@@ -173,6 +173,20 @@ export const handlers = [
     return HttpResponse.json(project)
   }),
 
+  // 删除项目
+  http.delete('*/projects/:id', ({ params }) => {
+    const { id } = params
+    const projectIndex = projects.findIndex(p => p.id === id)
+    if (projectIndex === -1) {
+      return HttpResponse.json(
+        { message: '项目不存在' },
+        { status: 404 }
+      )
+    }
+    projects.splice(projectIndex, 1)
+    return HttpResponse.json({ success: true })
+  }),
+
   // 更新项目（支持 pin 等字段）
   http.patch('*/projects/:id', async ({ params, request }) => {
     const { id } = params

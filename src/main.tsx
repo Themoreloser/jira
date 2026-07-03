@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client'
 import App from './App.tsx'
 import { initMocks } from './mocks'
 import 'antd/dist/antd.css'
+import { App as AntdApp } from 'antd'
 import { AppProviders } from './context/index.tsx'
 import ErrorBoundary from 'antd/es/alert/ErrorBoundary'
 // import './wdyr.ts'
@@ -22,7 +23,9 @@ async function bootstrap() {
     <ErrorBoundary>
        <AppProviders>
 <StrictMode>
-      <App />
+      <AntdApp>
+        <App />
+      </AntdApp>
     </StrictMode>
    </AppProviders>
     </ErrorBoundary>

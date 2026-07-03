@@ -34,7 +34,7 @@ export const useDeleteProject = (queryKey:QueryKey) => {
     const client = useHttp()
     return useMutation({
         mutationFn: ({id}:{id:number}) => client(`projects/${id}`, {
-            method: 'POST'
+            method: 'DELETE'
         }),
        ...useDeleteConfig(queryKey)
     })

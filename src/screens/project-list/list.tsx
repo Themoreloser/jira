@@ -1,5 +1,5 @@
 import React from "react";
-import { Dropdown, Menu, Modal, Table } from "antd";
+import { App, Dropdown, Table } from "antd";
 import type { User } from "./search-list";
 import dayjs from "dayjs";
 import { Link } from "react-router-dom";
@@ -92,17 +92,18 @@ export const List = ({ loading, users, dataSource }: ListProps) => {
   );
 };
 
-const More = ({project}:{peoject:Project})=>{
+const More = ({project}:{project:Project})=>{
  const editProject = (id: number) => () =>
     startEdit(id)
   const {startEdit} = useProjectModal()
   const {mutate:deleteProject} = useDeleteProject(useProjectQueryKey())
-  const confirmDeleteProject = (id:number) =>{
-    Modal.confirm({
+  const { modal } = App.useApp()
+  const confirmDeleteProject = (id:number) => () =>{
+    modal.confirm({
       title:"确定删除这个项目吗",
       content:"点击确定删除",
       okText:"确定",
-      onOK(){
+      onOk(){
         deleteProject({id})
       }
     })
