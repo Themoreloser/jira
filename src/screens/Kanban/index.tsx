@@ -10,14 +10,16 @@ export const KanbanScreen = ()=>{
 
     const {data:currentProject} = useProjectInUrl()
     const {data:kanbans} = useKanbans(useKanbanSearchParams())
-    return <ColumnContainer>
+    return <div>
         <h1>{currentProject?.name}看板</h1>
+        <ColumnContainer>
         {
         kanbans?.map(kanban => <KanbanColumn kanban={kanban} key={kanban.id}/>
-)
+    )
     }
     </ColumnContainer>
-    
+    </div>
+
 }
 
 const ColumnContainer = styled.div`

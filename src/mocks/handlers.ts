@@ -8,6 +8,22 @@ let users = [
   { id: '4', name: '王文静', password: '123456' },
 ]
 
+const kanbans = [
+  { id: 1, name: '待完成', projectId: 1 },
+  { id: 2, name: '开发中', projectId: 1 },
+  { id: 3, name: '已完成', projectId: 1 },
+]
+
+const tasks = [
+  { id: 1, name: '管理注册界面开发', processorId: 1, projectId: 1, epicId: 0, kanbanId: 1, typeId: 1, note: '' },
+  { id: 2, name: '性能优化', processorId: 1, projectId: 1, epicId: 0, kanbanId: 1, typeId: 1, note: '' },
+  { id: 3, name: '自测', processorId: 1, projectId: 1, epicId: 0, kanbanId: 1, typeId: 1, note: '' },
+  { id: 4, name: '管理登录界面开发', processorId: 2, projectId: 1, epicId: 0, kanbanId: 2, typeId: 1, note: '' },
+  { id: 5, name: 'UI开发', processorId: 2, projectId: 1, epicId: 0, kanbanId: 2, typeId: 1, note: '' },
+  { id: 6, name: '单元测试', processorId: 1, projectId: 1, epicId: 0, kanbanId: 3, typeId: 2, note: '' },
+  { id: 7, name: '权限管理界面开发', processorId: 2, projectId: 1, epicId: 0, kanbanId: 3, typeId: 2, note: '' },
+]
+
 const projects = [
   { id: '1', name: '骑手管理', personId: '1', pin: false, organization: '外卖组', created: 1604989757139 },
   { id: '2', name: '团购 APP', personId: '2', pin: false, organization: '团购组', created: 1604989757139 },
@@ -185,6 +201,30 @@ export const handlers = [
     }
     projects.splice(projectIndex, 1)
     return HttpResponse.json({ success: true })
+  }),
+
+  // 获取看板列表
+  http.get('*/kanbans', ({ request }) => {
+    const url = new URL(request.url)
+    const projectId = url.searchParams.get('projectId')
+
+    let filteredKanbans = [...kanbans]
+    if (projectId) {
+      filteredKanbans = filteredKanbans.filter(k => k.projectId === Number(projectId))
+    }
+    return HttpResponse.json(filteredKanbans)
+  }),
+
+  // 获取任务列表
+  http.get('*/tasks', ({ request }) => {
+    const url = new URL(request.url)
+    const projectId = url.searchParams.get('projectId')
+
+    let filteredTasks = [...tasks]
+    if (projectId) {
+      filteredTasks = filteredTasks.filter(t => t.projectId === Number(projectId))
+    }
+    return HttpResponse.json(filteredTasks)
   }),
 
   // 更新项目（支持 pin 等字段）

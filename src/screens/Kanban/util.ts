@@ -1,10 +1,8 @@
-import { useLocation } from "react-router"
+import { useParams } from "react-router"
 import { useProject } from "../../util/project"
 
  export const useProjectIdInUrl = ()=>{
-    const {pathname} = useLocation()
-    const id = pathname.match(/project\/(\d+)/)?.[1]
-    return Number(id)
+    return Number(useParams().projectId)
  }
 
  export const useProjectInUrl = ()=> useProject(useProjectIdInUrl())
