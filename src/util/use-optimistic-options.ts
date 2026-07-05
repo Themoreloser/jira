@@ -1,5 +1,5 @@
 import { useQueryClient, type QueryKey } from "@tanstack/react-query";
-import type { Project } from "../screens/project-list/list";
+import type { Project } from "../types/project";
 
 export const useConfig = (queryKey:QueryKey,callback:(target:any,old:any[])=>any[])=>{
     const queryClient = useQueryClient()

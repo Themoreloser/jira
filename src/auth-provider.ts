@@ -1,5 +1,5 @@
 // 在真实环境中，如果使用firebase这种第三方auth服务的话，本文件不需要开发者开发
-import type { User } from "./screens/project-list/search-list"
+import type { User } from "./types/user"
 const apiUrl = import.meta.env.VITE_API_URL
 const localStorageKey = '__auth_provider_token__'
 

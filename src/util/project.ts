@@ -1,4 +1,4 @@
-import type { Project } from "../screens/project-list/list"
+import type { Project } from "../types/project"
 import { useHttp } from "./http"
 import { useMutation, useQuery, type QueryKey } from "@tanstack/react-query"
 import { useEditConfig, useAddConfig, useDeleteConfig } from "./use-optimistic-options"

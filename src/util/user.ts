@@ -1,5 +1,5 @@
 import { useEffect } from "react"
-import type { User } from "../screens/project-list/search-list"
+import type { User } from "../types/user"
 import { useAsync } from "./use-async"
 import { useHttp } from "./http"
 import { cleanObject } from "."

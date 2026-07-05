@@ -1,22 +1,13 @@
-import React from "react";
 import { App, Dropdown, Table } from "antd";
-import type { User } from "./search-list";
+import type { User } from "../../types/user";
 import dayjs from "dayjs";
 import { Link } from "react-router-dom";
 import { Pin } from "../../components/pin";
 import { useDeleteProject, useEditProject } from "../../util/project";
-import type { JSX } from "@emotion/react/jsx-runtime";
 import { ButtonNoPadding } from "../../components/lib";
 import { useProjectModal, useProjectQueryKey } from "./util";
+import type { Project } from "../../types/project";
 
-export interface Project {
-  id: number;
-  name: string;
-  personId: number;
-  pin?: boolean;
-  organization: string;
-  created: number;
-}
 interface ListProps {
   loading?: boolean;
   dataSource: Project[];
