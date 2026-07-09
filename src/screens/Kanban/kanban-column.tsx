@@ -7,6 +7,7 @@ import taskIcon from '../../assets/task.svg'
 import bugIcon from '../../assets/bug.svg'
 import styled from "@emotion/styled";
 import { Card } from "antd";
+import { CreateTask } from "./craete-task";
 
 const iconMap: Record<string, string> = {
     '任务': taskIcon,
@@ -35,12 +36,13 @@ export const KanbanColumn = ({kanban}:{kanban:Kanban})=>{
             <TaskTypeIcon id={task.typeId}/>
         </Card>
             )}
+            <CreateTask kanbanId={kanban.id}/>
        </TasksContainer>
     </Container>
 }
 
-const Container = styled.div`
-  min-width: 27rem;
+export const Container = styled.div`
+  min-width: 20rem;
   border-radius: 6px;
   background-color: rgb(244, 245, 247);
   display: flex;
@@ -50,8 +52,8 @@ const Container = styled.div`
 `;
 
 const TasksContainer = styled.div`
-  overflow: scroll;
-  flex: 1;
+  overflow: auto;
+  max-height: 60vh;
 
   ::-webkit-scrollbar {
     display: none;
