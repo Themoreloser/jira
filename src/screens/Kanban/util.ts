@@ -9,9 +9,15 @@ import { useMemo } from "react"
 
  export const useProjectInUrl = ()=> useProject(useProjectIdInUrl())
 
- export const useKanbanSearchParams = ()=> ({projectId:useProjectIdInUrl()})
+ export const useKanbanSearchParams = ()=> {
+   const projectId = useProjectIdInUrl()
+   return useMemo(()=>({projectId}),[projectId])
+ }
 
- export const useKanbanQueryKey = ()=> ['kanbans',useKanbanSearchParams()]
+ export const useKanbanQueryKey = ()=> {
+   const params = useKanbanSearchParams()
+   return useMemo(()=>['kanbans',params],[params])
+ }
 
  export const useTasksSearchParams = ()=> {
    const [param,setParam] = useUrlQueryParam([
@@ -30,4 +36,7 @@ import { useMemo } from "react"
    }),[projectId,param])
  }
 
- export const useTasksQueryKey = ()=> ['tasks',useTasksSearchParams()]
+ export const useTasksQueryKey = ()=> {
+   const params = useTasksSearchParams()
+   return useMemo(()=>['tasks',params],[params])
+ }

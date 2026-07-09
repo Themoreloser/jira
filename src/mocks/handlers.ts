@@ -8,7 +8,7 @@ let users = [
   { id: '4', name: '王文静', password: '123456' },
 ]
 
-const kanbans = [
+let kanbans = [
   { id: 1, name: '待完成', projectId: 1 },
   { id: 2, name: '开发中', projectId: 1 },
   { id: 3, name: '已完成', projectId: 1 },
@@ -19,7 +19,7 @@ const taskTypes = [
   { id: 2, name: 'bug' },
 ]
 
-const tasks = [
+let tasks = [
   { id: 1, name: '管理注册界面开发', processorId: 1, projectId: 1, epicId: 0, kanbanId: 1, typeId: 1, note: '' },
   { id: 2, name: '性能优化', processorId: 1, projectId: 1, epicId: 0, kanbanId: 1, typeId: 1, note: '' },
   { id: 3, name: '自测', processorId: 1, projectId: 1, epicId: 0, kanbanId: 1, typeId: 1, note: '' },
@@ -220,6 +220,21 @@ export const handlers = [
     return HttpResponse.json(filteredKanbans)
   }),
 
+  // 创建看板
+  http.post('*/kanbans', async ({ request }) => {
+    const body = await request.json() as Record<string, unknown>
+    console.log('[MSW] 创建看板:', body)
+
+    const newKanban = {
+      id: kanbans.length > 0 ? Math.max(...kanbans.map(k => k.id)) + 1 : 1,
+      name: body.name as string || '',
+      projectId: Number(body.projectId) || 0,
+    }
+    kanbans.push(newKanban)
+
+    return HttpResponse.json(newKanban)
+  }),
+
   // 获取任务类型列表
   http.get('*/taskTypes', () => {
     return HttpResponse.json(taskTypes)
@@ -251,6 +266,26 @@ export const handlers = [
       filteredTasks = filteredTasks.filter(t => t.epicId === Number(tagId))
     }
     return HttpResponse.json(filteredTasks)
+  }),
+
+  // 创建任务
+  http.post('*/tasks', async ({ request }) => {
+    const body = await request.json() as Record<string, unknown>
+    console.log('[MSW] 创建任务:', body)
+
+    const newTask = {
+      id: tasks.length > 0 ? Math.max(...tasks.map(t => t.id)) + 1 : 1,
+      name: body.name as string || '',
+      processorId: Number(body.processorId) || 0,
+      projectId: Number(body.projectId) || 0,
+      epicId: Number(body.epicId) || 0,
+      kanbanId: Number(body.kanbanId) || 0,
+      typeId: Number(body.typeId) || 1,
+      note: body.note as string || '',
+    }
+    tasks.push(newTask)
+
+    return HttpResponse.json(newTask)
   }),
 
   // 更新项目（支持 pin 等字段）

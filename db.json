@@ -1,7 +1,140 @@
 {
+  "kanbans": [
+    {
+      "name": "dd",
+      "projectId": 1,
+      "id": "n8FXGhQ6me0"
+    },
+    {
+      "name": "达到",
+      "projectId": 1,
+      "id": "xDiwXM8U6Zo"
+    },
+    {
+      "name": "达到",
+      "projectId": 1,
+      "id": "i2RSwBvoOKQ"
+    },
+    {
+      "name": "达到",
+      "projectId": 1,
+      "id": "C4MgG1WpPx0"
+    },
+    {
+      "name": "达到",
+      "projectId": 1,
+      "id": "qNZnreaic-U"
+    },
+    {
+      "name": "方法",
+      "projectId": 1,
+      "id": "NA-J0rt3iV8"
+    },
+    {
+      "name": "达到",
+      "projectId": 1,
+      "id": "X45O_UrqvgQ"
+    }
+  ],
+  "taskTypes": [
+    {
+      "id": "1",
+      "name": "任务"
+    },
+    {
+      "id": "2",
+      "name": "bug"
+    }
+  ],
+  "tasks": [
+    {
+      "projectId": 1,
+      "name": "dd",
+      "kanbanId": 2,
+      "id": "GreQMRDNi6U"
+    },
+    {
+      "projectId": 1,
+      "name": "方法",
+      "kanbanId": 2,
+      "id": "bCb40X4z7AQ"
+    },
+    {
+      "projectId": 1,
+      "name": "达到",
+      "kanbanId": 2,
+      "id": "AmLQrz4FHgU"
+    },
+    {
+      "projectId": 1,
+      "name": "达到",
+      "kanbanId": 2,
+      "id": "1LAd3Ptf3Zg"
+    },
+    {
+      "projectId": 1,
+      "name": "达到",
+      "kanbanId": 2,
+      "id": "QbPNZia-fgc"
+    },
+    {
+      "projectId": 1,
+      "name": "达到",
+      "kanbanId": 2,
+      "id": "63i8SewIeUQ"
+    },
+    {
+      "projectId": 1,
+      "name": "达到",
+      "kanbanId": 2,
+      "id": "5rAvfGSUZj4"
+    },
+    {
+      "projectId": 1,
+      "name": "达到",
+      "kanbanId": 3,
+      "id": "WNEOIHzT5yo"
+    },
+    {
+      "projectId": 1,
+      "name": "达到",
+      "kanbanId": 3,
+      "id": "aQ-bnc2d050"
+    },
+    {
+      "projectId": 1,
+      "name": "达到",
+      "kanbanId": 2,
+      "id": "uGCLCs6c6RY"
+    },
+    {
+      "projectId": 1,
+      "name": "达到",
+      "kanbanId": 2,
+      "id": "ScXQywfLH9A"
+    },
+    {
+      "projectId": 1,
+      "name": "达到",
+      "kanbanId": 2,
+      "id": "crhYD5mfkv0"
+    },
+    {
+      "projectId": 1,
+      "name": "达到",
+      "kanbanId": 1783591885000,
+      "id": "NVW4qqB4REA"
+    },
+    {
+      "projectId": 1,
+      "name": "达到",
+      "kanbanId": 1783591885000,
+      "id": "zWLl3xazzVc"
+    }
+  ],
   "projects": [
     {
-      "id": 1,
+      "id": "1",
       "name": "骑手管理",
       "personId": 1,
       "organization": "外卖组",
@@ -9,7 +142,7 @@
       "pin": true
     },
     {
-      "id": 2,
+      "id": "2",
       "name": "团购APP",
       "personId": 2,
       "organization": "团购组",
@@ -17,7 +150,7 @@
       "pin": false
     },
     {
-      "id": 3,
+      "id": "3",
       "name": "物料管理系统",
       "personId": 2,
       "organization": "物料组",
@@ -25,7 +158,7 @@
       "pin": true
     },
     {
-      "id": 4,
+      "id": "4",
       "name": "前端性能优化",
       "personId": 1,
       "organization": "外卖组",
@@ -35,7 +168,7 @@
   ],
   "users": [
     {
-      "id": 1,
+      "id": "1",
       "name": "张三",
       "email": "zhangsan@example.com",
       "title": "前端工程师",
@@ -43,12 +176,13 @@
       "token": "token-zhangsan"
     },
     {
-      "id": 2,
+      "id": "2",
       "name": "李四",
       "email": "lisi@example.com",
       "title": "后端工程师",
       "organization": "团购组",
       "token": "token-lisi"
     }
-  ]
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
 }

@@ -3,7 +3,7 @@ import { useAddTask } from "../../util/task"
 import { useProjectIdInUrl, useTasksQueryKey } from "./util"
 import { Card, Input } from "antd"
 
-export const CreateTask = ()=>{
+export const CreateTask = ({kanbanId}:{kanbanId:number})=>{
     const [name,setName] = useState('')
     const {mutateAsync:addTask} = useAddTask(useTasksQueryKey())
     const projectId = useProjectIdInUrl()

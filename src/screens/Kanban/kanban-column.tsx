@@ -15,7 +15,7 @@ const iconMap: Record<string, string> = {
 }
 
 const TaskTypeIcon = ({id}:{id:number})=>{
-    const {data:taskTypes} = useTaskTypes()
+    const {data:taskTypes = []} = useTaskTypes()
     const name = taskTypes?.find(taskType => taskType.id === id)?.name
     if(!name){
         return null
@@ -24,7 +24,7 @@ const TaskTypeIcon = ({id}:{id:number})=>{
 }
 
 export const KanbanColumn = ({kanban}:{kanban:Kanban})=>{
-    const {data:allTasks} = useTasks(useTasksSearchParams())
+    const {data:allTasks = []} = useTasks(useTasksSearchParams())
     const tasks = allTasks?.filter(task=>task.kanbanId === kanban.id)
     return <Container>
        <TasksContainer>
@@ -49,6 +49,7 @@ export const Container = styled.div`
   flex-direction: column;
   padding: 0.7rem 0.7rem 1rem;
   margin-right: 1.5rem;
+  flex-shrink: 0;
 `;
 
 const TasksContainer = styled.div`
