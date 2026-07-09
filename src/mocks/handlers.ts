@@ -14,6 +14,11 @@ const kanbans = [
   { id: 3, name: '已完成', projectId: 1 },
 ]
 
+const taskTypes = [
+  { id: 1, name: '任务' },
+  { id: 2, name: 'bug' },
+]
+
 const tasks = [
   { id: 1, name: '管理注册界面开发', processorId: 1, projectId: 1, epicId: 0, kanbanId: 1, typeId: 1, note: '' },
   { id: 2, name: '性能优化', processorId: 1, projectId: 1, epicId: 0, kanbanId: 1, typeId: 1, note: '' },
@@ -213,6 +218,11 @@ export const handlers = [
       filteredKanbans = filteredKanbans.filter(k => k.projectId === Number(projectId))
     }
     return HttpResponse.json(filteredKanbans)
+  }),
+
+  // 获取任务类型列表
+  http.get('*/taskTypes', () => {
+    return HttpResponse.json(taskTypes)
   }),
 
   // 获取任务列表

@@ -8,13 +8,18 @@ import bugIcon from '../../assets/bug.svg'
 import styled from "@emotion/styled";
 import { Card } from "antd";
 
+const iconMap: Record<string, string> = {
+    '任务': taskIcon,
+    'bug': bugIcon,
+}
+
 const TaskTypeIcon = ({id}:{id:number})=>{
     const {data:taskTypes} = useTaskTypes()
     const name = taskTypes?.find(taskType => taskType.id === id)?.name
     if(!name){
         return null
     }
-    return <img src={name==='task' ? taskIcon : bugIcon} />
+    return <img src={iconMap[name] ?? taskIcon} />
 }
 
 export const KanbanColumn = ({kanban}:{kanban:Kanban})=>{
