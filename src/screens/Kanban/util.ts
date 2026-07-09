@@ -14,7 +14,7 @@ import { useMemo } from "react"
  export const useKanbanQueryKey = ()=> ['kanbans',useKanbanSearchParams()]
 
  export const useTasksSearchParams = ()=> {
-   const [] = useUrlQueryParam([
+   const [param,setParam] = useUrlQueryParam([
       'name',
       'typeId',
       'processorId',
@@ -26,7 +26,7 @@ import { useMemo } from "react"
       typeId:Number(param.typeId) || undefined,
       processorId:Number(param.processorId) || undefined,
       tagId:Number(param.tagId) || undefined,
-      name:partialMatchKey.name
+      name:param.name
    }),[projectId,param])
  }
 

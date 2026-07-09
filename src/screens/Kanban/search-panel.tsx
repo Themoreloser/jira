@@ -16,7 +16,7 @@ export const SearchPanel = ()=>{
         name:undefined
         })
     }
-    return <Row marginBottom={10} gap={true}>
+    return <Row marginBottom={4} gap={true}>
         <Input style={{width:'20rem'}} placeholder={'任务名'} value={searchParams.name}
          onChange={evt =>setSearchParams({name:evt.target.value})}/>
          <Userselect defaultOptionName={'经办人'} value={searchParams.processorId} 

@@ -229,10 +229,26 @@ export const handlers = [
   http.get('*/tasks', ({ request }) => {
     const url = new URL(request.url)
     const projectId = url.searchParams.get('projectId')
+    const name = url.searchParams.get('name')
+    const typeId = url.searchParams.get('typeId')
+    const processorId = url.searchParams.get('processorId')
+    const tagId = url.searchParams.get('tagId')
 
     let filteredTasks = [...tasks]
     if (projectId) {
       filteredTasks = filteredTasks.filter(t => t.projectId === Number(projectId))
+    }
+    if (name) {
+      filteredTasks = filteredTasks.filter(t => t.name.includes(name))
+    }
+    if (typeId) {
+      filteredTasks = filteredTasks.filter(t => t.typeId === Number(typeId))
+    }
+    if (processorId) {
+      filteredTasks = filteredTasks.filter(t => t.processorId === Number(processorId))
+    }
+    if (tagId) {
+      filteredTasks = filteredTasks.filter(t => t.epicId === Number(tagId))
     }
     return HttpResponse.json(filteredTasks)
   }),
