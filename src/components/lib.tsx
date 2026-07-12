@@ -33,6 +33,7 @@ export const FullPageloading = ()=><FullPage>
 </FullPage>
 
 export const FullPageError = ({error}:{error:Error})=><FullPage>
+<<<<<<< HEAD
 <ErrorBox error={error}></ErrorBox>
 </FullPage>
 
@@ -54,4 +55,12 @@ padding:3.2rem;
 width:100%;
 display:flex;
 flex-direction:column;
+=======
+ <Typography.Text type={"danger"}>{error.message}</Typography.Text>
+</FullPage>
+
+
+export const ButtonNoPadding = styled(Button)`
+padding:0;
+>>>>>>> redux-toolkit
 `

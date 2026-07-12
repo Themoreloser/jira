@@ -8,7 +8,11 @@ export const AppProviders = ({children}:{ children:ReactNode})=>{
         <AuthProvider>
         {children}
     </AuthProvider>
+<<<<<<< HEAD
     </QueryClientProvider>
    
     
 }
+=======
+}
+>>>>>>> redux-toolkit

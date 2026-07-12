@@ -1,6 +1,11 @@
 import * as auth from '../auth-provider'
+<<<<<<< HEAD
 import React, { useState, type ReactNode } from 'react';
 import type { User } from "../types/user";
+=======
+import React, { useState, useCallback, type ReactNode } from 'react';
+import type { User } from '../screens/project-list/search-list';
+>>>>>>> redux-toolkit
 import { useMount } from '../util';
 import { http } from '../util/http';
 import { FullPageError, FullPageloading } from '../components/lib';
@@ -26,21 +31,47 @@ const AuthContext = React.createContext<{
     register:(form:AuthForm) =>Promise<void>,
     login:(form:AuthForm) =>Promise<void>,
     logout:() =>Promise<void>,
+    projectModalOpen:boolean,
+    editingProjectId:number|undefined,
+    openProjectModal:()=>void,
+    closeProjectModal:()=>void,
+    startEditProject:(id:number)=>void,
 } | undefined>(undefined)
 AuthContext.displayName = 'AuthContext'
 
 export const AuthProvider = ({children}:{children:ReactNode}) => {
   const [user, setUser] = useState<User | null>(null)
+  const [projectModalOpen, setProjectModalOpen] = useState(false)
+  const [editingProjectId, setEditingProjectId] = useState<number|undefined>(undefined)
   const {run, isLoading, isError} = useAsync<User | null>()
 
   const queryClient = useQueryClient()
   // point free
   const login = (form: AuthForm) => auth.login(form).then(setUser)
   const register = (form: AuthForm) => auth.register(form).then(setUser)
+<<<<<<< HEAD
   const logout = () => auth.logout().then(() => {
     setUser(null)
     queryClient.clear()
   })
+=======
+  const logout = () => auth.logout().then(() => setUser(null))
+
+  const openProjectModal = useCallback(() => {
+    setProjectModalOpen(true)
+  }, [])
+
+  const closeProjectModal = useCallback(() => {
+    setProjectModalOpen(false)
+    setEditingProjectId(undefined)
+  }, [])
+
+  const startEditProject = useCallback((id: number) => {
+    setEditingProjectId(id)
+    setProjectModalOpen(true)
+  }, [])
+
+>>>>>>> redux-toolkit
   useMount(()=>{
     run(bootstrapUser().then(user => {
       setUser(user)
@@ -54,7 +85,11 @@ export const AuthProvider = ({children}:{children:ReactNode}) => {
   if(isError){
     return <FullPageError/>
   }
-  return <AuthContext.Provider children={children} value={{user,login,register,logout}}/>
+  return <AuthContext.Provider children={children} value={{
+    user,login,register,logout,
+    projectModalOpen,editingProjectId,
+    openProjectModal,closeProjectModal,startEditProject
+  }}/>
 }
 export const useAuth = ()=>{
     const context = React.useContext(AuthContext)

@@ -8,7 +8,6 @@ import { Navigate,Route,Routes } from "react-router"
 import {BrowserRouter as Router} from "react-router-dom"
 import { ProjectScreen } from "./screens/project"
 import { resetRoute } from "./util"
-import { useState } from "react"
 import { ProjectModel } from "./screens/project-list/project-model"
 import { ProjectPopover } from "./components/project-popover"
 /**
@@ -24,6 +23,7 @@ import { ProjectPopover } from "./components/project-popover"
  */
 
 export const AuthenticatedApp = ()=>{
+<<<<<<< HEAD
     
 return <div>
      <Router>
@@ -31,6 +31,10 @@ return <div>
         <ButtonNoPadding onClick={()=>setProjectModelOpen(true)}
         type={'link'}>创建项目</ButtonNoPadding>} />
        
+=======
+return <div>
+    <PageHeader />
+>>>>>>> redux-toolkit
     <Main>
     
     <Routes>
@@ -41,12 +45,15 @@ return <div>
    
     </Main>
     <ProjectModel />
+<<<<<<< HEAD
      </Router>
+=======
+>>>>>>> redux-toolkit
     </div>
 }
 
 const PageHeader = ()=>{
-     
+
     return <Header between={true}>
         <HeaderLeft gap={true}>
             <ButtonNoPadding style={{padding:0}} type={'link'} onClick={resetRoute}>
@@ -68,9 +75,6 @@ const PageHeader = ()=>{
             </a>
           </Dropdown>
     }
-// const PageHeader = styled.header`
-// height:6rem;
-// `
 
 const Main = styled.main`
 display:flex;
@@ -87,4 +91,3 @@ const HeaderLeft = styled(Row)``
 
 
 const HeaderRight = styled.div``
-
